@@ -19,7 +19,7 @@ function onload_fun(){
 let my_image = document.querySelector("img");
 my_image.addEventListener("click" , function(){
     let my_src = my_image.getAttribute("src");
-    if(my_src === "../img/clock cropped.png"){
+    if(my_src === "src/clock cropped.png"){
         my_image.setAttribute("src" , "img/clock cropped.png");
     }
     else{
