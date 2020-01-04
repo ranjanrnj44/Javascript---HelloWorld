@@ -1,61 +1,63 @@
-//heading content and 
-let heading  = document.querySelector("h1");
-
+//heading and button
+let heading  = document.querySelector(`h1`);
+heading.textContent = ` `;
+let usr_btn = document.querySelector(`.change_user`);
 //DOMContentLoaded
-document.addEventListener("DOMContentLoaded" , onload_fun);
+window.addEventListener(`DOMContentLoaded` , prompt_me);
 
-function onload_fun(){
-    let user_name = prompt(`Enter your name`);
-    if(!user_name || user_name === null){
-        alert(`Name is manditory`);
-        onload_fun();
+//prompt function, also set localStorage to store name
+function prompt_me(){
+    let username = prompt(`Hi there, Enter your name`);
+    if((!username) || (username === null)){
+        alert(`Username is necessary`);
+        prompt_me();
     }
     else{
-        heading.textContent = `Welcome to Js ${user_name}`;
+        localStorage.setItem(`name` , username);
+        heading.textContent = `Hi ${username.toUpperCase()}, Welcome`;
     }
 }
+//localStorage
+if(!localStorage.getItem(`name`)){
+    prompt_me();
+}else{
+    let existing_username = localStorage.getItem(`name`);
+    heading.textContent = `Hi ${existing_username.toUpperCase()}, Welcome`;
+}
+
+//give access once button is clicked
+usr_btn.addEventListener(`click` , prompt_me);
 
 //change image
-let my_image = document.querySelector("img");
-my_image.addEventListener("click" , function(){
-    let my_src = my_image.getAttribute("src");
-    if(my_src === "src/clock cropped.png"){
-        my_image.setAttribute("src" , "img/clock cropped.png");
+let my_img = document.querySelector(`img`);
+my_img.addEventListener(`click` , function(){
+    let my_src = my_img.getAttribute(`src`);
+    if(my_src === `img/clock cropped.png`){
+        my_img.setAttribute(`src` , `img/mail cropped.png`);
     }
     else{
-        my_image.setAttribute("src" , "img/mail cropped.png");
+        my_img.setAttribute(`src` , `img/clock cropped.png`);
     }
 });
 
-//change user name and store it locally
-let change_user = document.querySelector(".change_user");
-change_user.addEventListener("click" , function(){
-    let new_user_name = prompt(`Enter your name`);
-    if(!new_user_name || new_user_name === null){
-        onload_fun();
-    }
-    else{
-        localStorage.setItem("name" , new_user_name);
-        heading.textContent = `Welcome to Js ${new_user_name}`;
-    }
+//create dynamic_para
+function dynam(){
+    let list = document.querySelector(`nav ul`);
+    let para = document.createElement(`p`);
+    para.textContent = `I am Dynamic`;
+    list.appendChild(para);
+}
+
+let dyn_btn = document.querySelector(`.dynamic_para`);
+dyn_btn.addEventListener(`click` , dynam);
+
+//dynamic bg color
+function random(clr){
+    return Math.floor(Math.random()*clr);
+}
+
+let clr_btn = document.querySelector(`.change_background_color`);
+clr_btn.addEventListener(`click` , function(){
+    let rand = `rgb(${random(123)} ${random(223)} ${random(163)})`;
+    document.body.style.backgroundColor = rand;
 });
-
-//check the name in local storage
-if(!localStorage.getItem("name")){
-    onload_fun();
-}
-else{
-    let existing_user = localStorage.getItem("name");
-        existing_user.textContent = `Welcome to Js ${existing_user}`;
-}
-
-//create a dynamic para
-let nav_ul = document.querySelector("nav ul");
-    nav_ul.textContent = " ";
-
-let para = document.querySelector(".dynamic_para");
-    para.addEventListener("click" , function(){
-        let new_ele = document.createElement("li");
-        new_ele.textContent = "I am Dynamic";
-        nav_ul.appendChild(new_ele);
-    });
